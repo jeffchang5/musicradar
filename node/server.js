@@ -2,19 +2,28 @@
 // web server settings
 var HOSTNAME = dusty.airmanopus.net;
 var PORT = 8080;
-
+var Firebase = require("firebase");
 var dotenv = require('../node_modules/dotenv');
 dotenv._getKeysAndValuesFromEnvFilePath('../node_modules/ssl.env');
 dotenv._setEnvs();
 dotenv.load();
 
-// ssl certs
+// ssl certs, don't modify these
 var KEY_LOCATION = process.env.KEY_LOCATION;
 var CERT_LOCATION = process.env.CERT_LOCATION; 
 var options = {
     key: fs.readFileSync(KEY_LOCATION),
     cert: fs.readFileSync(CERT_LOCATION)
 };
+
+// spotify credentials
+var CLIENT_ID = process.env.CLIENT_ID;
+var CLIENT_SECRET = process.env.CLIENT_SECRET;
+var REDIRECT_URI = process.env.REDIRECT_URI; // this has to match URI specified on spotify
+
+// firebase
+var myFirebaseRef = new Firebase("https://calhacksmusicradar.firebaseio.com/");
+
 /**
  *  HTTP server
  *  example URLs
@@ -80,14 +89,29 @@ server.listen(POST, HOSTNAME);
 console.log('Server is listening on ' + HOSTNAME + ":" + PORT);
 
 /**
- *  Add a song to the master list of songs
+ *  Add songs to the master list of songs; we can't tell what songs a user is playing
+ *  but we can tell what they have on their playlists, so we'll use that
  *  @param lat {Number} latitude of device location in decimal degrees
  *  @param lon {Number} longitude of device location in decimal degrees
- *  @param song {String} name or identifier of song
+ *  @param spotifyID {String} spotify id of a track
  */
-function addSong(lat,lon,song) {
+function addSong(lat,lon,spotifyId) {
   'use strict';
-  console.log('addSong', lat, lon, song);
+  console.log('addSong', lat, lon, spotifyId);
+  // TODO get a list of the current user's playlists
+  // TODO for each playlist, get a list of that playlist's tracks
+  // TODO for each track, save the track's information to the db plus the location
+  var d = new Date();
+  var dateNow = d.getDate();
+  var usersRef = ref.child("songs");
+  usersRef.set({
+      song: {
+        spotifyID: spotifyId,
+        lat: lat,
+        lon: lon,
+        date: dateNow
+      },
+  });
   var result;
  
   return result;
@@ -102,7 +126,11 @@ function addSong(lat,lon,song) {
 function getMusic(lat,lon,radius) {
   'use strict';
   console.log('getMusic', lat, lon, radius);
+  // TODO select for records that are within radius of us
+  // TODO get those tracks see https://developer.spotify.com/web-api/get-several-tracks/ note: we can get up to 50 tracks per request
+  // TODO sort the list of tracks by ?
   var result;
 
+  
   return result;
 }

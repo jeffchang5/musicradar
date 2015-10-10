@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lezhanger/musicRadar.git"
+    "url": "https://github.com/jeffchang5/musicRadar.git"
   },
   "keywords": [
     "calhacks",
@@ -19,9 +19,17 @@
   "author": "",
   "license": "GPL",
   "bugs": {
-    "url": "https://github.com/lezhanger/musicRadar/issues"
+    "url": "https://github.com/jeffchang5/musicRadar/issues"
   },
   "devDependencies": {
-    "dotenv": "~1.2.0"
+    "dotenv": "~1.2.0",
+    "querystring": "~0.2.0",
+    "cookie-parser": "~1.4.0",
+    "express": "~4.13.3",
+    "request": "~2.64.0",
+    "firebase": "~2.3.1",
+    "grunt-cli": "~0.1.13",
+    "grunt": "~0.4.5",
+    "grunt-jsdoc": "~1.0.0"
   }
 }
