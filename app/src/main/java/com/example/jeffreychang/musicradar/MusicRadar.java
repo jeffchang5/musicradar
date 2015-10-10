@@ -7,23 +7,24 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
+import com.example.jeffreychang.musicradar.LoginService;
+
+import android.content.Intent;
 
 public class MusicRadar extends AppCompatActivity {
-    final Button button= (Button) findViewById(R.id.submit);
-    final EditText editName = (EditText) findViewById(R.id.name);
-    final EditText editPassword = (EditText) findViewById(R.id.password);
+    String editName;
+    String editPassword;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_radar);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                System.out.println("hello");
-            }
-        });
-
+        final Button b= (Button) findViewById(R.id.submit);
+        final EditText editName = (EditText) findViewById(R.id.name);
+        final EditText editPassword = (EditText) findViewById(R.id.password);
+        this.editName = editName.getText.toString();
+        this.editPassword = editPassword.getText.toString();
     }
 
     @Override
@@ -48,5 +49,11 @@ public class MusicRadar extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void startLogin(View view) {
+        LoginService loginService = new LoginService();
+        loginService.sendCredentials(editName,editPassword);
+//        Intent intent = new Intent(this, DisplayMessageActivity.class);
+
+    }
 
 }

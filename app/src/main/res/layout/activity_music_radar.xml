@@ -45,6 +45,7 @@
             android:id="@+id/submit"
             android:layout_gravity="center_horizontal"
             android:text="@string/submit"
-            android:onClick="login"/>
+            android:onClick="startLogin"/>
+
     </LinearLayout>
 </RelativeLayout>
