@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.TextView;
+
 
 public class MusicRadar extends AppCompatActivity {
     final Button button= (Button) findViewById(R.id.submit);
@@ -20,7 +22,8 @@ public class MusicRadar extends AppCompatActivity {
         setContentView(R.layout.activity_music_radar);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("hello");
+                //System.out.println("hello");
+                finish();
             }
         });
 
