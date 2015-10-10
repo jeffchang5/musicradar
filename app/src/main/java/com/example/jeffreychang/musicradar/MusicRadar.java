@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
+import android.util.Log;
 import com.example.jeffreychang.musicradar.LoginService;
 
 import android.content.Intent;
@@ -14,17 +15,20 @@ import android.content.Intent;
 public class MusicRadar extends AppCompatActivity {
     String editName;
     String editPassword;
+    private static final String TAG = "MusicRadar";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_radar);
+        Log.i(TAG, "I'm running!");
         final Button b= (Button) findViewById(R.id.submit);
         final EditText editName = (EditText) findViewById(R.id.name);
         final EditText editPassword = (EditText) findViewById(R.id.password);
-        this.editName = editName.getText.toString();
-        this.editPassword = editPassword.getText.toString();
+        this.editName = editName.getText().toString();
+        this.editPassword = editPassword.getText().toString();
+        Log.i(TAG, "I'm running!");
     }
 
     @Override
@@ -52,7 +56,8 @@ public class MusicRadar extends AppCompatActivity {
     public void startLogin(View view) {
         LoginService loginService = new LoginService();
         loginService.sendCredentials(editName,editPassword);
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
+
+        //Intent intent = new Intent(this, DisplayMessageActivity.class);
 
     }
 

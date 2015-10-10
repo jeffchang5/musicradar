@@ -6,7 +6,8 @@ import java.net.URLConnection;
 public class LoginService {
 
     public void sendCredentials(String username, String passowrd) {
-        System.out.println("hello");
+
     }
+
 
 }
