@@ -1,0 +1,27 @@
+{
+  "name": "musicRadar",
+  "version": "0.0.0",
+  "description": "CalHacks Music Radar",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lezhanger/musicRadar.git"
+  },
+  "keywords": [
+    "calhacks",
+    "spotify",
+    "music"
+  ],
+  "author": "",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/lezhanger/musicRadar/issues"
+  },
+  "devDependencies": {
+    "dotenv": "~1.2.0"
+  }
+}
