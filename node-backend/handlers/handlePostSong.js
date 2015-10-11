@@ -1,5 +1,3 @@
-const VERSION = 0.1;
-
 var uuid = require('uuid');
 var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
@@ -79,7 +77,6 @@ var errorWriteResponse = {
   'status': {
     'code': 500,
     'message': 'Failed to write to database 💩',
-    'version': VERSION
   }
 };
 

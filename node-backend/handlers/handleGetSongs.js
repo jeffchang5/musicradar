@@ -9,6 +9,7 @@ module.exports = function(req, res) {
   // Read all items in Databse that:
   // Are within X distance form Lat and Lon
   // Are not with the request userID
+  // Add timestamp filtering too
   
   var mongoUrl = 'mongodb://localhost:27017/myproject';
 
@@ -23,36 +24,40 @@ module.exports = function(req, res) {
     console.log('Connected to database successfully');
 
     var collection = db.collection('documents');
-    
-    console.log('Got a valid connection');
+    var cursor = collection.find(
+      {
+        $and: [
+          {
+            'userid': {$ne: requestBody.userid}
+          },
+          {
+            'longitude': {$gt: requestBody.longitude - DELTA,
+                          $lt: requestBody.longitude + DELTA}
+          },
+          {
+            'latitude': {$gt: requestBody.latitude - DELTA,
+                         $lt: requestBody.latitude + DELTA}
+          },
+        ]
+      });
 
-    var cursor = collection.find();
-    //cursor.forEach(function(doc) { console.log('Userid: ' + doc.userid)});
-    console.log('-----------------------');
-    //console.log(JSON.stringify(util.inspect(allData)));
-    // console.log('All Length: ' + Object.keys(allData).length);
-    var withinLatitude = collection.find({ latitude: { $gt: req.body.latitude - 5,
-                                                       $lt: req.body.latitude + 5 }});
+    var printDoc = function printDoc(doc) {
+      console.log('UserID: ' + doc.userid);
+      console.log('Latitude: ' + doc.longitude);
+      console.log('Longitude: ' + doc.latitude);
+      console.log('SongID: ' + doc.songid);
+    }
 
-    
-    withinLatitude.forEach(function(doc) { console.log('Userid: ' + doc.userid)});
-    console.log('Length: ' + Object.keys(withinLatitude).length)
-    collection.remove({});
-    //console.log(JSON.stringify(util.inspect(withinLatitude), null, 2));
-    // console.log('Found by latitude successfully');
-    // var withinArea = withinLatitude.filter(function(o) {
-    //   return (o.longitude > req.body.longitude - 5) &&
-    //          (o.longitude < req.body.longitude + 5);
-    // });
-    //     console.log('Length: ' + Object.keys(withinArea).length)
+    var results = [];
+    cursor.forEach(function(doc) {
+      printDoc(doc);
+      results.push({
+        'songid': doc.songid
+        // Request more info through Spotify
+      });
+    });
 
-    // console.log('Filtered by area successfully');
-
-    // var notThisId = withinArea.filter(function(o) { return o._id !== req.body.userid; });
-
-    // console.log('Filtered by area');
-    // // Are the objects in notThisId with keys? What is the song representation?
-
+    res.status(200).json(successResponse(results));
     
   });
 }
