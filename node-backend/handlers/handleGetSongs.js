@@ -1,7 +1,6 @@
-var util = require('util');
-
 var DELTA = 5;
 var MongoClient = require('mongodb').MongoClient;
+var spotifyData = require('../getSpotifySong.js');
 
 module.exports = function(req, res) {
   console.log('In GET request');
@@ -48,17 +47,14 @@ module.exports = function(req, res) {
       console.log('SongID: ' + doc.songid);
     }
 
-    var results = [];
+    var resultsongids = [];
     cursor.forEach(function(doc) {
       printDoc(doc);
-      results.push({
-        'songid': doc.songid
-        // Request more info through Spotify
-      });
+      resultsongids.push(doc.songid);
     });
 
-    res.status(200).json(successResponse(results));
-    
+    var resultWithSpotifyData = spotifyData(resultsongids);
+    res.status(200).json(successResponse(resultWithSpotifyData));
   });
 }
 

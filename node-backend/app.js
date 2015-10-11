@@ -1,10 +1,3 @@
-/*
-  Rest API
-  POST location
-  POST music
-  GET music
- */
-
 const express = require('express');
 const session = require('express-session');
 const request = require('request');
@@ -25,17 +18,15 @@ var stateKey = 'spotify_auth_state';
 
 
 var app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'))
-   .use(cookieParser());
-app.use(session({
-  userName: "User's Name",
-  access_token: "access token",
-  refresh_token: "refresh token",
-  secret: 'secreeet',
-  // resave: '',
-  // saveUninitialized: ''
+app.use(bodyParser.json())
+   .use(bodyParser.urlencoded({extended: true}))
+   .use(express.static(__dirname + '/public'))
+   .use(cookieParser())
+   .use(session({
+      userName: "User's Name",
+      access_token: "access token",
+      refresh_token: "refresh token",
+      secret: 'secreeet',
 }));
 /**
  * Generate alphanumeric random string id 
@@ -180,7 +171,8 @@ app.get('/refresh_token', function(req, res) {
 })
 
 app.post('/song', handlePostSong);
-// app.post('/location', handlePostLocation);
+
 app.get('/songs', handleGetSongs);
+
 console.log('Listening on 8888');
 app.listen(8888);
