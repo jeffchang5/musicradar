@@ -3,8 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="login">Login</string>
-    <string name="password">password</string>
-    <string name="submit">submit</string>
-    <string name="primpt">Enter your password.</string>
+    <string name="strings" />
+    <string name="connect">Connect with Spotify</string>
+    <string name="subtitle">Discover music by connecting with Spotify.</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="token"></string>
 </resources>
