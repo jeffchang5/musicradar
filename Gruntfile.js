@@ -7,7 +7,7 @@ module.exports = function(grunt){
 		jsdoc: {
 		        dist : {
 			    	src: [
-						'js/drivinandflyin.js'
+						'node/server.js'
 					],
 					jsdoc: './node_modules/.bin/jsdoc',
 					options: {
