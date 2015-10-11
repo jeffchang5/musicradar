@@ -1,7 +1,6 @@
 var request = require('request');
 
-module.exports = function(songs) {
-  console.log('Songs requested: ' + songs);
+module.exports = function(res, songs) {
   request.get(
     {url: 'https://api.spotify.com/v1/tracks/' + makeUrlAttachment(songs)},
     function(err, result, body) {
@@ -11,9 +10,12 @@ module.exports = function(songs) {
         return;
       }
 
+     console.log('Songs requested: ' + songs);
+
       var allTracks = body.tracks;
       var result = [];
-      if (!allTracks) { return result; }
+      if (!allTracks) { res.status(200).json(successResponse(result)); return; }
+
       for(var i = 0, j = allTracks.length; i < j; i++) {
         var currentTrack = allTracks[i];
         var songInfo = {
@@ -37,4 +39,14 @@ var makeUrlAttachment = function makeUrlAttachment(songs) {
     result += (songs[i] + ',');
   }
   return result;
-}
+};
+
+var successResponse = function successResponse(songs) {
+  return {
+    'status':{
+        'code': 200,
+        'message':'Query successful 😁'
+    },
+    'songs': songs
+  };
+};

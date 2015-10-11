@@ -15,7 +15,8 @@ const redirect_uri = 'http://localhost:8888/callback';
 
 var stateKey = 'spotify_auth_state';
 
-
+var MongoClient = require('mongodb').MongoClient;
+var mongoUrl = 'mongodb://localhost:27017/myproject';
 
 var app = express();
 app.use(bodyParser.json())
@@ -170,9 +171,22 @@ app.get('/refresh_token', function(req, res) {
   });
 })
 
-app.post('/song', handlePostSong);
+MongoClient.connect(mongoUrl, function(err, db) {
+  if (err) {
+    console.log('Error connecting to the database');
+    return;
+  }
 
-app.get('/songs', handleGetSongs);
+  console.log('Connected to database successfully');
+
+  app.post('/song', function(res, req) {
+    handlePostSong(res, req, db);
+  });
+
+  app.get('/songs', function(res, req) {
+    handleGetSongs(res, req, db);
+  });
+})
 
 console.log('Listening on 8888');
 app.listen(8888);
