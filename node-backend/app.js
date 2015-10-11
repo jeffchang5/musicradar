@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 var handlePostSong = require('./handlers/handlePostSong.js');
+var handleGetSongs = require('./handlers/handleGetSongs.js');
 
 const _keys = require('./secrets.json');
 const CLIENT_ID = _keys.CLIENT_ID;

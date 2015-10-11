@@ -11,11 +11,11 @@ module.exports = function(req, res) {
   var requestBody = req.body;
   console.log('Post Song Request');
   // Add song ID with geolocation to database
-  // UserID | Lat | Long | SongId
+  // UserID | Lat | Long | SongId | Timestamp
   
   var databaseWriteSucessful = false;
 
-  if (!validRequest(requestBody)) {
+  if (! validRequest(requestBody)) {
     res.status(400).json(errorRequest);    
   }
 
@@ -26,17 +26,20 @@ module.exports = function(req, res) {
       return;
     }
 
+    console.log('Connected to database successfully.');
     var collection = db.collection('documents');
+    console.log('Collection connected successfully');
     var trackDocument = {
-      'userid': req.body.userid,
+      '_id': req.body.userid,
       'latitude': req.body.latitude,
       'longitude': req.body.longitude,
       'timestamp': Date.now(),
       'songid': req.body.songid
     };
     
-    collection.insert([], function(err, result) {
+    collection.insert([trackDocument], function(err, result) {
       if (err) {
+        console.log('Err')
         res.status(500).json(errorWriteResponse);
         console.log(err);
       } else {
@@ -53,7 +56,8 @@ module.exports = function(req, res) {
 var validRequest = function validRequest(requestBody) {
   return (typeof requestBody.latitude === 'number' &&
           typeof requestBody.longitude === 'number' &&
-          typeof requestBody.songId === 'string');
+          typeof requestBody.songid === 'string' &&
+          typeof requestBody.userid === 'string');
 }
 
 var insertDocument = function insertDocument(db, callback, songEntry) {
@@ -62,32 +66,24 @@ var insertDocument = function insertDocument(db, callback, songEntry) {
   collection.insert([songEntry], callback);
 }
 
-var sucessResponse = function sucessResponse() {
-  return {
-    'status': {
-      'code': 200,
-      'message': 'Sucessfully added song to database. 😁',
-      'version': VERSION
-    }
-  };
-};
-
-var errorWriteResponse = function errorWriteResponse() {
-  return {
-    'status' {
-      'code': 500,
-      'message': 'Failed to write to database 💩',
-      'version': VERSION
-    }
-  };
-};
-
-var errorRequest = function errorRequest() {
-  return {
-    'status' {
-      'code': 400,
-      'message': 'Bad request 💩. Request body must contain userid, latitude, longitude, songid 😉',
-      'version': VERSION
-    }
+var sucessResponse = {
+  'status': {
+    'code': 200,
+    'message': 'Sucessfully added song to database. 😁',
   }
-}
+};
+
+var errorWriteResponse = {
+  'status': {
+    'code': 500,
+    'message': 'Failed to write to database 💩',
+    'version': VERSION
+  }
+};
+
+var errorRequest = {
+  'status': {
+    'code': 400,
+    'message': 'Bad request 💩. Request body must contain userid, latitude, longitude, songid 😉'
+  }
+};
