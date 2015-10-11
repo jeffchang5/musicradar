@@ -1,5 +1,6 @@
 const VERSION = 0.1;
 
+var uuid = require('uuid');
 var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
@@ -30,7 +31,8 @@ module.exports = function(req, res) {
     var collection = db.collection('documents');
     console.log('Collection connected successfully');
     var trackDocument = {
-      '_id': req.body.userid,
+      '_id': uuid.v4(),
+      'userid': req.body.userid,
       'latitude': req.body.latitude,
       'longitude': req.body.longitude,
       'timestamp': Date.now(),

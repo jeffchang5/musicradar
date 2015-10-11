@@ -181,6 +181,6 @@ app.get('/refresh_token', function(req, res) {
 
 app.post('/song', handlePostSong);
 // app.post('/location', handlePostLocation);
-// app.get('/localSongs', handleGetSongs);
+app.get('/songs', handleGetSongs);
 console.log('Listening on 8888');
 app.listen(8888);
