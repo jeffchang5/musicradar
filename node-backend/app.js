@@ -16,7 +16,8 @@ const redirect_uri = 'http://localhost:8888/callback';
 var stateKey = 'spotify_auth_state';
 
 var MongoClient = require('mongodb').MongoClient;
-var mongoUrl = 'mongodb://localhost:27017/myproject';
+var mongoUrl = 'mongodb://23.99.85.200';
+// var mongoUrl = 'mongodb://localhost:27017/myproject';
 
 var app = express();
 app.use(bodyParser.json())
